@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "114487740523",
+    "project_id": "truefriend-3725f",
+    "storage_bucket": "truefriend-3725f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114487740523:android:e01d66fb1bd7cc725cc92e",
+        "android_client_info": {
+          "package_name": "com.example.your_friend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA80nnOhOpaRhqAUF4UtDVCtJh2NcDICNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
