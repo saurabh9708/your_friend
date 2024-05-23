@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // exit full screen
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(
-          SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+          SystemUiOverlayStyle(systemNavigationBarColor: Colors.white24));
 
       if (APIs.auth.currentUser != null) {
         log('\nUser: ${APIs.auth.currentUser}');
