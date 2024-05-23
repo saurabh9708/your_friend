@@ -28,8 +28,6 @@ void main() {
     _initializeFirebase();
     runApp(const MyApp());
   });
-  // _initializeFirebase();
-  // runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -44,6 +42,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           appBarTheme: AppBarTheme(
         // centerTitle: true,
@@ -56,10 +55,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-// _initializeFirebase() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-// }

@@ -5,6 +5,8 @@ import '../main.dart';
 import '../models/chat_users.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../presentations/chat_screens.dart';
+
 class ChatUserCard extends StatefulWidget {
   final ChatUser user;
   const ChatUserCard({super.key, required this.user});
@@ -21,7 +23,10 @@ class _ChatUserCardState extends State<ChatUserCard> {
       elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => ChatScreen(user: widget.user)));
+        },
         child: ListTile(
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(mq.height * .3),
@@ -29,7 +34,6 @@ class _ChatUserCardState extends State<ChatUserCard> {
                 width: mq.height * .055,
                 height: mq.height * .055,
                 imageUrl: widget.user.image,
-                // placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => const CircleAvatar(
                   child: Icon(CupertinoIcons.person),
                 ),
