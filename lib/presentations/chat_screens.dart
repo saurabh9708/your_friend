@@ -1,11 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:your_friend/widgets/message_card.dart';
 
 import '../Api/apis.dart';
@@ -232,7 +234,18 @@ class _ChatScreenState extends State<ChatScreen> {
                     )),
                 // take image from camera button
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final ImagePicker picker = ImagePicker();
+                      final XFile? image = await picker.pickImage(
+                          source: ImageSource.camera, imageQuality: 70);
+                      if (image != null) {
+                        log('Image Path: ${image.path}');
+
+                        await APIs.sendChatImage(widget.user, File(image.path));
+                        // for Hiding Bottom Sheet
+                        // Navigator.pop(context);
+                      }
+                    },
                     icon: const Icon(
                       Icons.camera_alt_rounded,
                       color: Colors.black54,
@@ -247,7 +260,7 @@ class _ChatScreenState extends State<ChatScreen> {
           MaterialButton(
             onPressed: () {
               if (_textController.text.isNotEmpty) {
-                APIs.sendMessage(widget.user, _textController.text);
+                APIs.sendMessage(widget.user, _textController.text, Type.text);
                 _textController.text = '';
               }
             },
