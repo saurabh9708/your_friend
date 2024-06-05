@@ -82,7 +82,7 @@ class APIs {
     });
   }
 
-  //Update Profile Picture of user in profile
+  //Update Profile Picture of user
   static Future<void> updateProfilePicture(File file) async {
     // getting image file extension
     final ext = file.path.split('.').last;
@@ -104,6 +104,23 @@ class APIs {
         .collection('users')
         .doc(user.uid)
         .update({'image': me.name});
+  }
+
+  // For getting specific user info
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfo(
+      ChatUser chatUser) {
+    return firestore
+        .collection('users')
+        .where('id', isEqualTo: chatUser.id)
+        .snapshots();
+  }
+
+  // update online or last active status of user
+  static Future<void> updateActiveStatus(bool isOnline) async {
+    firestore.collection('users').doc(user.uid).update({
+      'is_online': isOnline,
+      'last_active': DateTime.now().microsecondsSinceEpoch.toString()
+    });
   }
 
   ///*******************Chat Screen Related APIs (Messages)***********************/
