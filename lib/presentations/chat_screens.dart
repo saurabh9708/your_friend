@@ -15,6 +15,7 @@ import '../Api/apis.dart';
 import '../main.dart';
 import '../models/chat_users.dart';
 import '../models/message.dart';
+import 'viewprofile_screens.dart';
 
 class ChatScreen extends StatefulWidget {
   final ChatUser user;
@@ -136,7 +137,12 @@ class _ChatScreenState extends State<ChatScreen> {
   // AppBar Widget
   Widget _appBar() {
     return InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ViewProfileScreen(user: widget.user)));
+        },
         child: StreamBuilder(
             stream: APIs.getUserInfo(widget.user),
             builder: (context, snapshot) {

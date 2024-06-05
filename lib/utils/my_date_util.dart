@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 class MyDateUtil {
   // for getting formatted time milliSecondsSinceEpochs String
   static String getFormattedTime(
-      {required BuildContext context, required String time}) {
+      {required BuildContext context,
+      required String time,
+      bool showYear = false}) {
     final date = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
     return TimeOfDay.fromDateTime(date).format(context);
   }
 
   // get last message time (used in chat user card)
   static String getLastMessageTime(
-      {required BuildContext context, required String time}) {
+      {required BuildContext context,
+      required String time,
+      bool showYear = false}) {
     final DateTime sent = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
     final DateTime now = DateTime.now();
 
@@ -20,7 +24,9 @@ class MyDateUtil {
         now.year == sent.year) {
       return TimeOfDay.fromDateTime(sent).format(context);
     }
-    return '${sent.day} ${_getMonth(sent)}';
+    return showYear
+        ? '${sent.day} ${_getMonth(sent)} ${sent.year}'
+        : '${sent.day} ${_getMonth(sent)}';
   }
 
   // get formatted last active time of user in chat screen
