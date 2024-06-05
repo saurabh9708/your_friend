@@ -32,7 +32,9 @@ class _ChatScreenState extends State<ChatScreen> {
   final _textController = TextEditingController();
 
   // for storing value of showing or hiding emojis
-  bool _showEmoji = false;
+  bool _showEmoji = false,
+      // isUploading -- for checking is image is uploading or not?
+      _isUploading = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -75,26 +77,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ?.map((e) => Message.fromJson(e.data()))
                                     .toList() ??
                                 [];
-                            // final _list = [];
-                            // _list.clear();
-                            // _list.add(Message(
-                            //     toId: 'xyz',
-                            //     msg: 'Hii',
-                            //     read: '',
-                            //     type: Type.text,
-                            //     sent: '12:00 PM',
-                            //     fromId: APIs.user.uid));
-
-                            // _list.add(Message(
-                            //     toId: APIs.user.uid,
-                            //     msg: 'Hello',
-                            //     read: '',
-                            //     type: Type.text,
-                            //     sent: '12:05 PM',
-                            //     fromId: 'xyz'));
 
                             if (_list.isNotEmpty) {
                               return ListView.builder(
+                                  reverse: true,
                                   itemCount: _list.length,
                                   padding: EdgeInsets.only(top: 15),
                                   physics: const BouncingScrollPhysics(),
@@ -113,6 +99,17 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       }),
                 ),
+                if (_isUploading)
+                  const Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 08),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  ),
                 _chatInput(),
                 if (_showEmoji)
                   SizedBox(
@@ -226,7 +223,22 @@ class _ChatScreenState extends State<ChatScreen> {
                 )),
                 // Pick Image from gallery button
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final ImagePicker picker = ImagePicker();
+
+                      // picking multiple images
+                      final List<XFile>? images =
+                          await picker.pickMultiImage(imageQuality: 70);
+
+                      // uploading & sending image one by one
+                      for (var i in images!) {
+                        log('Image Path: ${i.path}');
+                        setState(() => _isUploading = true);
+
+                        await APIs.sendChatImage(widget.user, File(i.path));
+                        setState(() => _isUploading = false);
+                      }
+                    },
                     icon: const Icon(
                       Icons.image,
                       color: Colors.black54,
@@ -236,12 +248,16 @@ class _ChatScreenState extends State<ChatScreen> {
                 IconButton(
                     onPressed: () async {
                       final ImagePicker picker = ImagePicker();
+
+                      // pick an image
                       final XFile? image = await picker.pickImage(
                           source: ImageSource.camera, imageQuality: 70);
                       if (image != null) {
                         log('Image Path: ${image.path}');
+                        setState(() => _isUploading = true);
 
                         await APIs.sendChatImage(widget.user, File(image.path));
+                        setState(() => _isUploading = false);
                         // for Hiding Bottom Sheet
                         // Navigator.pop(context);
                       }
