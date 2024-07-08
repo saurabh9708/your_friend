@@ -41,17 +41,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          appBarTheme: AppBarTheme(
-        // centerTitle: true,
-        elevation: 1,
-        backgroundColor: Colors.blue[200],
-      )),
-      home: SplashScreen(),
-      // home: LoginScreen(),
-      // home: HomeScreen()
-    );
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            appBarTheme: AppBarTheme(
+          // centerTitle: true,
+          elevation: 1,
+          backgroundColor: Colors.blue[200],
+        )),
+        // home: SplashScreen(),
+        // home: LoginScreen(),
+        home: HomeScreen());
   }
 }
