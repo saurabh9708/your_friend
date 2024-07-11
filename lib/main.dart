@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       )),
       home: SplashScreen(),
       // home: LoginScreen(),
-      // home: HomeScreen()
+      // home: HomeScreen(),
     );
   }
 }
